@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Visit Report - Platform Basket</title>
+  <title>Scheda Visita Fornitore - Platform Basket</title>
   <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
   <style>
     * {
@@ -242,307 +242,590 @@
     <div class="topbar">
       <img src="logo.png" alt="Platform Basket">
       <div class="topbar-text">
-        <h1>Client Visit Report</h1>
+        <h1>Scheda Visita Fornitore</h1>
         <p>Platform Basket</p>
       </div>
     </div>
 
     <div class="card">
-      <h2>1. Client Details</h2>
+      <h2>1. Dati Fornitore</h2>
       <div class="grid">
         <div class="field">
-          <label for="visitDate">Visit Date</label>
+          <label for="visitDate">Data visita</label>
           <input type="date" id="visitDate">
         </div>
         <div class="field">
-          <label for="company">Company</label>
+          <label for="company">Nome azienda</label>
           <input type="text" id="company">
         </div>
         <div class="field">
-          <label for="office">Head Office / Location</label>
+          <label for="office">Sede / Località</label>
           <input type="text" id="office">
         </div>
         <div class="field">
-          <label for="contactPerson">Contact Person (Name + Role)</label>
+          <label for="address">Indirizzo</label>
+          <input type="text" id="address">
+        </div>
+        <div class="field">
+          <label for="country">Paese</label>
+          <input type="text" id="country">
+        </div>
+        <div class="field">
+          <label for="website">Sito web</label>
+          <input type="text" id="website">
+        </div>
+        <div class="field">
+          <label for="contactPerson">Persona di riferimento</label>
           <input type="text" id="contactPerson">
         </div>
         <div class="field">
-          <label for="phone">Phone</label>
+          <label for="role">Ruolo</label>
+          <input type="text" id="role">
+        </div>
+        <div class="field">
+          <label for="phone">Telefono</label>
           <input type="tel" id="phone">
         </div>
         <div class="field">
           <label for="email">Email</label>
           <input type="email" id="email">
         </div>
-        <div class="field full">
-          <label for="website">Website</label>
-          <input type="text" id="website">
-        </div>
       </div>
     </div>
 
     <div class="card">
-      <h2>2. Company Profile</h2>
+      <h2>2. Profilo Aziendale</h2>
+
       <div class="field">
-        <label>Business Type</label>
+        <label>Tipologia azienda</label>
         <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" class="businessType" value="Rental"> Rental</label>
-          <label class="checkbox-item"><input type="checkbox" class="businessType" value="Dealer / Reseller"> Dealer / Reseller</label>
-          <label class="checkbox-item"><input type="checkbox" class="businessType" value="End User"> End User</label>
-          <label class="checkbox-item"><input type="checkbox" class="businessType" value="Other"> Other</label>
+          <label class="checkbox-item"><input type="checkbox" class="companyType" value="Produttore"> Produttore</label>
+          <label class="checkbox-item"><input type="checkbox" class="companyType" value="Distributore"> Distributore</label>
+          <label class="checkbox-item"><input type="checkbox" class="companyType" value="Rivenditore"> Rivenditore</label>
+          <label class="checkbox-item"><input type="checkbox" class="companyType" value="Fornitore di servizi"> Fornitore di servizi</label>
+          <label class="checkbox-item"><input type="checkbox" class="companyType" value="Partner tecnico"> Partner tecnico</label>
+          <label class="checkbox-item"><input type="checkbox" class="companyType" value="Altro"> Altro</label>
         </div>
       </div>
 
       <div class="grid">
         <div class="field">
-          <label for="employees">Number of Employees</label>
+          <label for="foundedYear">Anno di fondazione</label>
+          <input type="number" id="foundedYear" placeholder="Es. 1998">
+        </div>
+        <div class="field">
+          <label for="employees">Numero dipendenti</label>
           <input type="number" id="employees">
         </div>
         <div class="field">
-          <label for="operatingArea">Operating Area</label>
-          <select id="operatingArea">
-            <option value="">Select</option>
-            <option>Local</option>
-            <option>National</option>
-            <option>International</option>
-          </select>
-        </div>
-        <div class="field full">
-          <label for="revenue">Estimated Annual Revenue</label>
+          <label for="revenue">Fatturato annuo indicativo</label>
           <select id="revenue">
-            <option value="">Select</option>
+            <option value="">Seleziona</option>
             <option>&lt; 1M</option>
-            <option>1-5M</option>
-            <option>5-10M</option>
-            <option>&gt; 10M</option>
+            <option>1M - 5M</option>
+            <option>5M - 10M</option>
+            <option>10M - 50M</option>
+            <option>&gt; 50M</option>
+            <option>Non comunicato</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="operatingArea">Area operativa</label>
+          <select id="operatingArea">
+            <option value="">Seleziona</option>
+            <option>Locale</option>
+            <option>Nazionale</option>
+            <option>Internazionale</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mainOffice">Sede principale</label>
+          <input type="text" id="mainOffice">
+        </div>
+        <div class="field">
+          <label for="mainSector">Settore principale</label>
+          <input type="text" id="mainSector">
+        </div>
+        <div class="field full">
+          <label for="otherSites">Altre sedi / stabilimenti</label>
+          <textarea id="otherSites"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>3. Mercato, Clienti e Referenze</h2>
+      <div class="grid">
+        <div class="field full">
+          <label for="mainMarkets">Principali mercati serviti</label>
+          <textarea id="mainMarkets"></textarea>
+        </div>
+        <div class="field full">
+          <label for="sectorsServed">Settori serviti</label>
+          <textarea id="sectorsServed"></textarea>
+        </div>
+        <div class="field full">
+          <label for="mainClients">Clienti principali / referenze</label>
+          <textarea id="mainClients"></textarea>
+        </div>
+        <div class="field full">
+          <label for="suppliedBrands">Marchi o aziende a cui fornisce</label>
+          <textarea id="suppliedBrands"></textarea>
+        </div>
+        <div class="field">
+          <label for="similarCompanies">Lavora con aziende simili alla nostra?</label>
+          <select id="similarCompanies">
+            <option value="">Seleziona</option>
+            <option>Sì</option>
+            <option>No</option>
+            <option>Da verificare</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="competitors">Lavora con competitor?</label>
+          <select id="competitors">
+            <option value="">Seleziona</option>
+            <option>Sì</option>
+            <option>No</option>
+            <option>Non comunicato</option>
+            <option>Da verificare</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="internationalPresence">Presenza internazionale</label>
+          <input type="text" id="internationalPresence">
+        </div>
+        <div class="field">
+          <label for="marketStrengths">Punti di forza sul mercato</label>
+          <input type="text" id="marketStrengths">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4. Prodotti / Servizi Offerti</h2>
+      <div class="grid">
+        <div class="field full">
+          <label for="mainProducts">Prodotti o servizi principali</label>
+          <textarea id="mainProducts"></textarea>
+        </div>
+        <div class="field full">
+          <label for="productCategories">Categorie trattate</label>
+          <textarea id="productCategories"></textarea>
+        </div>
+        <div class="field full">
+          <label for="representedBrands">Marchi rappresentati</label>
+          <textarea id="representedBrands"></textarea>
+        </div>
+        <div class="field full">
+          <label for="interestingProducts">Prodotti di maggiore interesse per noi</label>
+          <textarea id="interestingProducts"></textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Servizi aggiuntivi offerti</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" class="additionalServices" value="Consulenza tecnica"> Consulenza tecnica</label>
+          <label class="checkbox-item"><input type="checkbox" class="additionalServices" value="Personalizzazione prodotto"> Personalizzazione prodotto</label>
+          <label class="checkbox-item"><input type="checkbox" class="additionalServices" value="Assistenza post-vendita"> Assistenza post-vendita</label>
+          <label class="checkbox-item"><input type="checkbox" class="additionalServices" value="Formazione"> Formazione</label>
+          <label class="checkbox-item"><input type="checkbox" class="additionalServices" value="Manutenzione"> Manutenzione</label>
+          <label class="checkbox-item"><input type="checkbox" class="additionalServices" value="Ricambi"> Ricambi</label>
+          <label class="checkbox-item"><input type="checkbox" class="additionalServices" value="Altro"> Altro</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="sectorExperience">Esperienza nel nostro settore</label>
+        <textarea id="sectorExperience"></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>5. Capacità Produttiva / Disponibilità</h2>
+      <div class="grid">
+        <div class="field full">
+          <label for="productionCapacity">Capacità produttiva</label>
+          <textarea id="productionCapacity"></textarea>
+        </div>
+        <div class="field">
+          <label for="stockAvailability">Disponibilità a magazzino</label>
+          <input type="text" id="stockAvailability">
+        </div>
+        <div class="field">
+          <label for="leadTime">Tempi medi di consegna</label>
+          <input type="text" id="leadTime" placeholder="Es. 4-6 settimane">
+        </div>
+        <div class="field">
+          <label for="moq">Quantità minima d’ordine</label>
+          <input type="text" id="moq">
+        </div>
+        <div class="field">
+          <label for="urgency">Possibilità di gestire urgenze</label>
+          <select id="urgency">
+            <option value="">Seleziona</option>
+            <option>Sì</option>
+            <option>No</option>
+            <option>Da verificare</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="futureGrowth">Possibilità di crescita futura</label>
+          <select id="futureGrowth">
+            <option value="">Seleziona</option>
+            <option>Bassa</option>
+            <option>Media</option>
+            <option>Alta</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="supplyStability">Stabilità della fornitura</label>
+          <select id="supplyStability">
+            <option value="">Seleziona</option>
+            <option>Bassa</option>
+            <option>Media</option>
+            <option>Alta</option>
+            <option>Da verificare</option>
           </select>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <h2>3. Fleet Information</h2>
-      <div class="grid">
-        <div class="field">
-          <label for="totalMachines">Total Number of Machines</label>
-          <input type="number" id="totalMachines">
-        </div>
-        <div class="field">
-          <label for="similarMachines">Machines Similar to Ours</label>
-          <input type="number" id="similarMachines">
-        </div>
-      </div>
+      <h2>6. Qualità e Certificazioni</h2>
 
       <div class="field">
-        <label>Machine Types in Fleet</label>
+        <label>Certificazioni disponibili</label>
         <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" class="fleetTypes" value="Spider Lifts"> Spider Lifts</label>
-          <label class="checkbox-item"><input type="checkbox" class="fleetTypes" value="Truck Mounted"> Truck Mounted</label>
-          <label class="checkbox-item"><input type="checkbox" class="fleetTypes" value="Vertical Lifts"> Vertical Lifts</label>
-          <label class="checkbox-item"><input type="checkbox" class="fleetTypes" value="Articulated"> Articulated</label>
-          <label class="checkbox-item"><input type="checkbox" class="fleetTypes" value="Telescopic"> Telescopic</label>
-          <label class="checkbox-item"><input type="checkbox" class="fleetTypes" value="Other"> Other</label>
+          <label class="checkbox-item"><input type="checkbox" class="certifications" value="ISO 9001"> ISO 9001</label>
+          <label class="checkbox-item"><input type="checkbox" class="certifications" value="ISO 14001"> ISO 14001</label>
+          <label class="checkbox-item"><input type="checkbox" class="certifications" value="Certificazioni prodotto"> Certificazioni prodotto</label>
+          <label class="checkbox-item"><input type="checkbox" class="certifications" value="Certificazioni sicurezza"> Certificazioni sicurezza</label>
+          <label class="checkbox-item"><input type="checkbox" class="certifications" value="Altro"> Altro</label>
+          <label class="checkbox-item"><input type="checkbox" class="certifications" value="Nessuna / Non comunicato"> Nessuna / Non comunicato</label>
         </div>
       </div>
 
       <div class="grid">
         <div class="field full">
-          <label for="brands">Main Brands</label>
-          <input type="text" id="brands">
+          <label for="qualityStandards">Standard qualitativi</label>
+          <textarea id="qualityStandards"></textarea>
+        </div>
+        <div class="field full">
+          <label for="qualityControl">Procedure di controllo qualità</label>
+          <textarea id="qualityControl"></textarea>
         </div>
         <div class="field">
-          <label for="fleetAge">Average Fleet Age</label>
-          <input type="text" id="fleetAge" placeholder="Example: 5 years">
+          <label for="warranties">Garanzie offerte</label>
+          <input type="text" id="warranties">
         </div>
         <div class="field">
-          <label for="fleetCondition">General Fleet Condition</label>
-          <select id="fleetCondition">
-            <option value="">Select</option>
-            <option>New</option>
-            <option>Average</option>
-            <option>Old</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>4. Market and Usage</h2>
-      <div class="field">
-        <label>Main Customer Sectors</label>
-        <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" class="customerSectors" value="Construction"> Construction</label>
-          <label class="checkbox-item"><input type="checkbox" class="customerSectors" value="Industry"> Industry</label>
-          <label class="checkbox-item"><input type="checkbox" class="customerSectors" value="Tree Care / Green"> Tree Care / Green</label>
-          <label class="checkbox-item"><input type="checkbox" class="customerSectors" value="Facility / Maintenance"> Facility / Maintenance</label>
-          <label class="checkbox-item"><input type="checkbox" class="customerSectors" value="Other"> Other</label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Usage Type</label>
-        <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" class="usageType" value="Short-Term Rental"> Short-Term Rental</label>
-          <label class="checkbox-item"><input type="checkbox" class="usageType" value="Long-Term Rental"> Long-Term Rental</label>
-          <label class="checkbox-item"><input type="checkbox" class="usageType" value="Internal Use"> Internal Use</label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="workAreas">Main Operating Areas / Territories</label>
-        <input type="text" id="workAreas">
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>5. Current Suppliers</h2>
-      <div class="field">
-        <label for="currentBrands">Purchased / Rented Brands</label>
-        <input type="text" id="currentBrands">
-      </div>
-
-      <div class="field">
-        <label for="purchaseFrequency">Purchase Frequency</label>
-        <input type="text" id="purchaseFrequency">
-      </div>
-
-      <div class="field">
-        <label>Why They Choose Current Suppliers</label>
-        <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" class="supplierReasons" value="Price"> Price</label>
-          <label class="checkbox-item"><input type="checkbox" class="supplierReasons" value="Quality"> Quality</label>
-          <label class="checkbox-item"><input type="checkbox" class="supplierReasons" value="Service"> Service</label>
-          <label class="checkbox-item"><input type="checkbox" class="supplierReasons" value="Availability"> Availability</label>
-          <label class="checkbox-item"><input type="checkbox" class="supplierReasons" value="Other"> Other</label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="supplierProblems">Issues / Weaknesses with Current Suppliers</label>
-        <textarea id="supplierProblems"></textarea>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>6. Needs and Opportunities</h2>
-      <div class="field">
-        <label for="currentNeeds">Current Needs</label>
-        <textarea id="currentNeeds"></textarea>
-      </div>
-
-      <div class="field">
-        <label for="missingMachines">Machine Types Missing in Their Fleet</label>
-        <textarea id="missingMachines"></textarea>
-      </div>
-
-      <div class="field">
-        <label>Interest In</label>
-        <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" class="interestType" value="New Purchase"> New Purchase</label>
-          <label class="checkbox-item"><input type="checkbox" class="interestType" value="Fleet Replacement"> Fleet Replacement</label>
-          <label class="checkbox-item"><input type="checkbox" class="interestType" value="Fleet Expansion"> Fleet Expansion</label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Timing</label>
-        <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" class="timing" value="Immediate"> Immediate</label>
-          <label class="checkbox-item"><input type="checkbox" class="timing" value="3-6 Months"> 3-6 Months</label>
-          <label class="checkbox-item"><input type="checkbox" class="timing" value="6-12 Months"> 6-12 Months</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>7. Commercial Positioning</h2>
-      <div class="field">
-        <label for="proposedProducts">Platform Basket Products to Propose</label>
-        <textarea id="proposedProducts"></textarea>
-      </div>
-
-      <div class="field">
-        <label>Key Strengths to Push</label>
-        <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" class="strengths" value="Compactness"> Compactness</label>
-          <label class="checkbox-item"><input type="checkbox" class="strengths" value="Performance"> Performance</label>
-          <label class="checkbox-item"><input type="checkbox" class="strengths" value="Quality"> Quality</label>
-          <label class="checkbox-item"><input type="checkbox" class="strengths" value="Service"> Service</label>
-          <label class="checkbox-item"><input type="checkbox" class="strengths" value="Other"> Other</label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="competitors">Competitors Present</label>
-        <input type="text" id="competitors">
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>8. Client Evaluation</h2>
-      <div class="grid">
-        <div class="field">
-          <label for="interestLevel">Interest Level (1-5)</label>
-          <select id="interestLevel">
-            <option value="">Select</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="potential">Potential</label>
-          <select id="potential">
-            <option value="">Select</option>
-            <option>Low</option>
-            <option>Medium</option>
-            <option>High</option>
+          <label for="technicalDocs">Documentazione tecnica disponibile</label>
+          <select id="technicalDocs">
+            <option value="">Seleziona</option>
+            <option>Sì</option>
+            <option>No</option>
+            <option>Parziale</option>
+            <option>Da richiedere</option>
           </select>
         </div>
         <div class="field full">
-          <label for="probability">Sales Probability (%)</label>
-          <input type="number" id="probability">
+          <label for="complaintsHistory">Storico problematiche / reclami</label>
+          <textarea id="complaintsHistory"></textarea>
+        </div>
+        <div class="field full">
+          <label for="knownIssues">Eventuali criticità note</label>
+          <textarea id="knownIssues"></textarea>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <h2>9. Follow-Up</h2>
-      <div class="field">
-        <label>Next Actions</label>
-        <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" class="followUp" value="Send Catalogue"> Send Catalogue</label>
-          <label class="checkbox-item"><input type="checkbox" class="followUp" value="Send Offer"> Send Offer</label>
-          <label class="checkbox-item"><input type="checkbox" class="followUp" value="Machine Demo"> Machine Demo</label>
-          <label class="checkbox-item"><input type="checkbox" class="followUp" value="New Visit"> New Visit</label>
+      <h2>7. Logistica e Consegne</h2>
+      <div class="grid">
+        <div class="field full">
+          <label for="deliveryAreas">Zone di consegna</label>
+          <textarea id="deliveryAreas"></textarea>
         </div>
-      </div>
-
-      <div class="field">
-        <label for="nextAction">Next Planned Action</label>
-        <textarea id="nextAction"></textarea>
-      </div>
-
-      <div class="field">
-        <label for="nextContactDate">Next Contact Date</label>
-        <input type="date" id="nextContactDate">
+        <div class="field">
+          <label for="deliveryTimes">Tempi medi di consegna</label>
+          <input type="text" id="deliveryTimes">
+        </div>
+        <div class="field">
+          <label for="shippingMethods">Modalità di spedizione</label>
+          <input type="text" id="shippingMethods">
+        </div>
+        <div class="field">
+          <label for="packaging">Gestione imballaggio</label>
+          <input type="text" id="packaging">
+        </div>
+        <div class="field">
+          <label for="transportCosts">Costi di trasporto</label>
+          <input type="text" id="transportCosts">
+        </div>
+        <div class="field">
+          <label for="tracking">Tracciabilità spedizioni</label>
+          <select id="tracking">
+            <option value="">Seleziona</option>
+            <option>Sì</option>
+            <option>No</option>
+            <option>Da verificare</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="afterSalesSupport">Assistenza post-vendita</label>
+          <select id="afterSalesSupport">
+            <option value="">Seleziona</option>
+            <option>Buona</option>
+            <option>Media</option>
+            <option>Bassa</option>
+            <option>Da verificare</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="returnsManagement">Gestione resi / sostituzioni</label>
+          <textarea id="returnsManagement"></textarea>
+        </div>
       </div>
     </div>
 
     <div class="card">
-      <h2>10. Free Notes</h2>
-      <div class="field">
-        <textarea id="freeNotes" style="min-height: 140px;"></textarea>
+      <h2>8. Condizioni Commerciali</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="priceLevel">Livello prezzi</label>
+          <select id="priceLevel">
+            <option value="">Seleziona</option>
+            <option>Basso</option>
+            <option>Medio</option>
+            <option>Alto</option>
+            <option>Da valutare</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="paymentTerms">Condizioni di pagamento</label>
+          <select id="paymentTerms">
+            <option value="">Seleziona</option>
+            <option>Anticipato</option>
+            <option>30 giorni</option>
+            <option>60 giorni</option>
+            <option>90 giorni</option>
+            <option>Da concordare</option>
+            <option>Altro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="discounts">Scontistiche</label>
+          <input type="text" id="discounts">
+        </div>
+        <div class="field">
+          <label for="commercialFlexibility">Flessibilità commerciale</label>
+          <select id="commercialFlexibility">
+            <option value="">Seleziona</option>
+            <option>Bassa</option>
+            <option>Media</option>
+            <option>Alta</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="priceLists">Listini disponibili</label>
+          <select id="priceLists">
+            <option value="">Seleziona</option>
+            <option>Sì</option>
+            <option>No</option>
+            <option>Da richiedere</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="currency">Valuta utilizzata</label>
+          <input type="text" id="currency" placeholder="Es. EUR">
+        </div>
+        <div class="field">
+          <label for="offerValidity">Validità offerte</label>
+          <input type="text" id="offerValidity">
+        </div>
+        <div class="field full">
+          <label for="contractConditions">Condizioni contrattuali</label>
+          <textarea id="contractConditions"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>9. Opportunità di Collaborazione</h2>
+      <div class="grid">
+        <div class="field full">
+          <label for="cooperationAreas">Possibili aree di collaborazione</label>
+          <textarea id="cooperationAreas"></textarea>
+        </div>
+        <div class="field full">
+          <label for="productsInterest">Prodotti / servizi di interesse</label>
+          <textarea id="productsInterest"></textarea>
+        </div>
+        <div class="field">
+          <label for="strategicValue">Valore strategico del fornitore</label>
+          <select id="strategicValue">
+            <option value="">Seleziona</option>
+            <option>Basso</option>
+            <option>Medio</option>
+            <option>Alto</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="priority">Priorità della collaborazione</label>
+          <select id="priority">
+            <option value="">Seleziona</option>
+            <option>Bassa</option>
+            <option>Media</option>
+            <option>Alta</option>
+            <option>Urgente</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="advantages">Possibili vantaggi per la nostra azienda</label>
+          <textarea id="advantages"></textarea>
+        </div>
+        <div class="field full">
+          <label for="risks">Rischi potenziali</label>
+          <textarea id="risks"></textarea>
+        </div>
+        <div class="field full">
+          <label for="nextSteps">Prossimi passi</label>
+          <textarea id="nextSteps"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>10. Valutazione Fornitore</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="reliability">Affidabilità</label>
+          <select id="reliability">
+            <option value="">Seleziona</option>
+            <option>1 - Scarso</option>
+            <option>2 - Sufficiente</option>
+            <option>3 - Buono</option>
+            <option>4 - Molto buono</option>
+            <option>5 - Ottimo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="qualityLevel">Qualità prodotto / servizio</label>
+          <select id="qualityLevel">
+            <option value="">Seleziona</option>
+            <option>1 - Scarso</option>
+            <option>2 - Sufficiente</option>
+            <option>3 - Buono</option>
+            <option>4 - Molto buono</option>
+            <option>5 - Ottimo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="priceCompetitiveness">Competitività prezzo</label>
+          <select id="priceCompetitiveness">
+            <option value="">Seleziona</option>
+            <option>1 - Scarso</option>
+            <option>2 - Sufficiente</option>
+            <option>3 - Buono</option>
+            <option>4 - Molto buono</option>
+            <option>5 - Ottimo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="serviceLevel">Livello di servizio</label>
+          <select id="serviceLevel">
+            <option value="">Seleziona</option>
+            <option>1 - Scarso</option>
+            <option>2 - Sufficiente</option>
+            <option>3 - Buono</option>
+            <option>4 - Molto buono</option>
+            <option>5 - Ottimo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="productionCapability">Capacità produttiva</label>
+          <select id="productionCapability">
+            <option value="">Seleziona</option>
+            <option>1 - Scarso</option>
+            <option>2 - Sufficiente</option>
+            <option>3 - Buono</option>
+            <option>4 - Molto buono</option>
+            <option>5 - Ottimo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="supplierFlexibility">Flessibilità</label>
+          <select id="supplierFlexibility">
+            <option value="">Seleziona</option>
+            <option>1 - Scarso</option>
+            <option>2 - Sufficiente</option>
+            <option>3 - Buono</option>
+            <option>4 - Molto buono</option>
+            <option>5 - Ottimo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="collaborationPotential">Potenziale collaborazione</label>
+          <select id="collaborationPotential">
+            <option value="">Seleziona</option>
+            <option>1 - Scarso</option>
+            <option>2 - Sufficiente</option>
+            <option>3 - Buono</option>
+            <option>4 - Molto buono</option>
+            <option>5 - Ottimo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="overallEvaluation">Valutazione complessiva</label>
+          <select id="overallEvaluation">
+            <option value="">Seleziona</option>
+            <option>1 - Scarso</option>
+            <option>2 - Sufficiente</option>
+            <option>3 - Buono</option>
+            <option>4 - Molto buono</option>
+            <option>5 - Ottimo</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>11. Note Libere</h2>
+      <div class="grid">
+        <div class="field full">
+          <label for="freeNotes">Note generali</label>
+          <textarea id="freeNotes" style="min-height: 140px;"></textarea>
+        </div>
+        <div class="field full">
+          <label for="internalComments">Commenti interni</label>
+          <textarea id="internalComments"></textarea>
+        </div>
+        <div class="field full">
+          <label for="importantInfo">Informazioni importanti</label>
+          <textarea id="importantInfo"></textarea>
+        </div>
+        <div class="field full">
+          <label for="toVerify">Aspetti da verificare</label>
+          <textarea id="toVerify"></textarea>
+        </div>
+        <div class="field full">
+          <label for="documentsRequest">Documenti da richiedere</label>
+          <textarea id="documentsRequest"></textarea>
+        </div>
+        <div class="field">
+          <label for="nextContactDate">Prossimo contatto previsto</label>
+          <input type="date" id="nextContactDate">
+        </div>
       </div>
     </div>
 
     <div class="actions">
-      <button class="btn btn-whatsapp" onclick="sendWhatsApp()">Send via WhatsApp</button>
-      <button class="btn btn-excel" onclick="downloadExcel()">Download Excel</button>
-      <button class="btn btn-clear" onclick="clearForm()">Clear Form</button>
-      <div class="note">WhatsApp opens the report already written. Excel downloads a real .xlsx file.</div>
+      <button class="btn btn-whatsapp" onclick="sendWhatsApp()">Invia via WhatsApp</button>
+      <button class="btn btn-excel" onclick="downloadExcel()">Scarica Excel</button>
+      <button class="btn btn-clear" onclick="clearForm()">Pulisci modulo</button>
+      <div class="note">WhatsApp apre il report già scritto. Excel scarica un vero file .xlsx.</div>
     </div>
   </div>
 
@@ -571,154 +854,292 @@
 
     function sendWhatsApp() {
       const message =
-        "CLIENT VISIT REPORT\n\n" +
-        "1. CLIENT DETAILS\n" +
-        line("Visit Date", getValue("visitDate")) +
-        line("Company", getValue("company")) +
-        line("Head Office / Location", getValue("office")) +
-        line("Contact Person", getValue("contactPerson")) +
-        line("Phone", getValue("phone")) +
-        line("Email", getValue("email")) +
-        line("Website", getValue("website")) + "\n" +
+        "SCHEDA VISITA FORNITORE\n\n" +
 
-        "2. COMPANY PROFILE\n" +
-        line("Business Type", getCheckedValues("businessType")) +
-        line("Employees", getValue("employees")) +
-        line("Operating Area", getValue("operatingArea")) +
-        line("Estimated Revenue", getValue("revenue")) + "\n" +
+        "1. DATI FORNITORE\n" +
+        line("Data visita", getValue("visitDate")) +
+        line("Nome azienda", getValue("company")) +
+        line("Sede / Località", getValue("office")) +
+        line("Indirizzo", getValue("address")) +
+        line("Paese", getValue("country")) +
+        line("Sito web", getValue("website")) +
+        line("Persona di riferimento", getValue("contactPerson")) +
+        line("Ruolo", getValue("role")) +
+        line("Telefono", getValue("phone")) +
+        line("Email", getValue("email")) + "\n" +
 
-        "3. FLEET INFORMATION\n" +
-        line("Total Machines", getValue("totalMachines")) +
-        line("Machines Similar to Ours", getValue("similarMachines")) +
-        line("Fleet Types", getCheckedValues("fleetTypes")) +
-        line("Main Brands", getValue("brands")) +
-        line("Average Fleet Age", getValue("fleetAge")) +
-        line("Fleet Condition", getValue("fleetCondition")) + "\n" +
+        "2. PROFILO AZIENDALE\n" +
+        line("Tipologia azienda", getCheckedValues("companyType")) +
+        line("Anno di fondazione", getValue("foundedYear")) +
+        line("Numero dipendenti", getValue("employees")) +
+        line("Fatturato annuo indicativo", getValue("revenue")) +
+        line("Area operativa", getValue("operatingArea")) +
+        line("Sede principale", getValue("mainOffice")) +
+        line("Settore principale", getValue("mainSector")) +
+        line("Altre sedi / stabilimenti", getValue("otherSites")) + "\n" +
 
-        "4. MARKET AND USAGE\n" +
-        line("Customer Sectors", getCheckedValues("customerSectors")) +
-        line("Usage Type", getCheckedValues("usageType")) +
-        line("Main Operating Areas", getValue("workAreas")) + "\n" +
+        "3. MERCATO, CLIENTI E REFERENZE\n" +
+        line("Principali mercati serviti", getValue("mainMarkets")) +
+        line("Settori serviti", getValue("sectorsServed")) +
+        line("Clienti principali / referenze", getValue("mainClients")) +
+        line("Marchi o aziende a cui fornisce", getValue("suppliedBrands")) +
+        line("Lavora con aziende simili alla nostra", getValue("similarCompanies")) +
+        line("Lavora con competitor", getValue("competitors")) +
+        line("Presenza internazionale", getValue("internationalPresence")) +
+        line("Punti di forza sul mercato", getValue("marketStrengths")) + "\n" +
 
-        "5. CURRENT SUPPLIERS\n" +
-        line("Current Brands", getValue("currentBrands")) +
-        line("Purchase Frequency", getValue("purchaseFrequency")) +
-        line("Why They Choose Current Suppliers", getCheckedValues("supplierReasons")) +
-        line("Supplier Issues", getValue("supplierProblems")) + "\n" +
+        "4. PRODOTTI / SERVIZI OFFERTI\n" +
+        line("Prodotti o servizi principali", getValue("mainProducts")) +
+        line("Categorie trattate", getValue("productCategories")) +
+        line("Marchi rappresentati", getValue("representedBrands")) +
+        line("Prodotti di maggiore interesse per noi", getValue("interestingProducts")) +
+        line("Servizi aggiuntivi offerti", getCheckedValues("additionalServices")) +
+        line("Esperienza nel nostro settore", getValue("sectorExperience")) + "\n" +
 
-        "6. NEEDS AND OPPORTUNITIES\n" +
-        line("Current Needs", getValue("currentNeeds")) +
-        line("Missing Machines", getValue("missingMachines")) +
-        line("Interest In", getCheckedValues("interestType")) +
-        line("Timing", getCheckedValues("timing")) + "\n" +
+        "5. CAPACITÀ PRODUTTIVA / DISPONIBILITÀ\n" +
+        line("Capacità produttiva", getValue("productionCapacity")) +
+        line("Disponibilità a magazzino", getValue("stockAvailability")) +
+        line("Tempi medi di consegna", getValue("leadTime")) +
+        line("Quantità minima d’ordine", getValue("moq")) +
+        line("Possibilità di gestire urgenze", getValue("urgency")) +
+        line("Possibilità di crescita futura", getValue("futureGrowth")) +
+        line("Stabilità della fornitura", getValue("supplyStability")) + "\n" +
 
-        "7. COMMERCIAL POSITIONING\n" +
-        line("Proposed Products", getValue("proposedProducts")) +
-        line("Key Strengths", getCheckedValues("strengths")) +
-        line("Competitors", getValue("competitors")) + "\n" +
+        "6. QUALITÀ E CERTIFICAZIONI\n" +
+        line("Certificazioni disponibili", getCheckedValues("certifications")) +
+        line("Standard qualitativi", getValue("qualityStandards")) +
+        line("Procedure di controllo qualità", getValue("qualityControl")) +
+        line("Garanzie offerte", getValue("warranties")) +
+        line("Documentazione tecnica disponibile", getValue("technicalDocs")) +
+        line("Storico problematiche / reclami", getValue("complaintsHistory")) +
+        line("Eventuali criticità note", getValue("knownIssues")) + "\n" +
 
-        "8. CLIENT EVALUATION\n" +
-        line("Interest Level", getValue("interestLevel")) +
-        line("Potential", getValue("potential")) +
-        line("Sales Probability", getValue("probability") ? getValue("probability") + "%" : "") + "\n" +
+        "7. LOGISTICA E CONSEGNE\n" +
+        line("Zone di consegna", getValue("deliveryAreas")) +
+        line("Tempi medi di consegna", getValue("deliveryTimes")) +
+        line("Modalità di spedizione", getValue("shippingMethods")) +
+        line("Gestione imballaggio", getValue("packaging")) +
+        line("Costi di trasporto", getValue("transportCosts")) +
+        line("Tracciabilità spedizioni", getValue("tracking")) +
+        line("Assistenza post-vendita", getValue("afterSalesSupport")) +
+        line("Gestione resi / sostituzioni", getValue("returnsManagement")) + "\n" +
 
-        "9. FOLLOW-UP\n" +
-        line("Next Actions", getCheckedValues("followUp")) +
-        line("Next Planned Action", getValue("nextAction")) +
-        line("Next Contact Date", getValue("nextContactDate")) + "\n" +
+        "8. CONDIZIONI COMMERCIALI\n" +
+        line("Livello prezzi", getValue("priceLevel")) +
+        line("Condizioni di pagamento", getValue("paymentTerms")) +
+        line("Scontistiche", getValue("discounts")) +
+        line("Flessibilità commerciale", getValue("commercialFlexibility")) +
+        line("Listini disponibili", getValue("priceLists")) +
+        line("Valuta utilizzata", getValue("currency")) +
+        line("Validità offerte", getValue("offerValidity")) +
+        line("Condizioni contrattuali", getValue("contractConditions")) + "\n" +
 
-        "10. FREE NOTES\n" +
-        (getValue("freeNotes") || "") + "\n";
+        "9. OPPORTUNITÀ DI COLLABORAZIONE\n" +
+        line("Possibili aree di collaborazione", getValue("cooperationAreas")) +
+        line("Prodotti / servizi di interesse", getValue("productsInterest")) +
+        line("Valore strategico del fornitore", getValue("strategicValue")) +
+        line("Priorità della collaborazione", getValue("priority")) +
+        line("Possibili vantaggi per la nostra azienda", getValue("advantages")) +
+        line("Rischi potenziali", getValue("risks")) +
+        line("Prossimi passi", getValue("nextSteps")) + "\n" +
+
+        "10. VALUTAZIONE FORNITORE\n" +
+        line("Affidabilità", getValue("reliability")) +
+        line("Qualità prodotto / servizio", getValue("qualityLevel")) +
+        line("Competitività prezzo", getValue("priceCompetitiveness")) +
+        line("Livello di servizio", getValue("serviceLevel")) +
+        line("Capacità produttiva", getValue("productionCapability")) +
+        line("Flessibilità", getValue("supplierFlexibility")) +
+        line("Potenziale collaborazione", getValue("collaborationPotential")) +
+        line("Valutazione complessiva", getValue("overallEvaluation")) + "\n" +
+
+        "11. NOTE LIBERE\n" +
+        line("Note generali", getValue("freeNotes")) +
+        line("Commenti interni", getValue("internalComments")) +
+        line("Informazioni importanti", getValue("importantInfo")) +
+        line("Aspetti da verificare", getValue("toVerify")) +
+        line("Documenti da richiedere", getValue("documentsRequest")) +
+        line("Prossimo contatto previsto", getValue("nextContactDate"));
 
       window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank");
     }
 
     function downloadExcel() {
       if (typeof XLSX === "undefined") {
-        alert("XLSX library not loaded.");
+        alert("Libreria XLSX non caricata.");
         return;
       }
 
       const headers = [
-        "Visit Date",
-        "Company",
-        "Head Office",
-        "Contact Person",
-        "Phone",
+        "Data visita",
+        "Nome azienda",
+        "Sede / Località",
+        "Indirizzo",
+        "Paese",
+        "Sito web",
+        "Persona di riferimento",
+        "Ruolo",
+        "Telefono",
         "Email",
-        "Website",
-        "Business Type",
-        "Employees",
-        "Operating Area",
-        "Revenue",
-        "Total Machines",
-        "Similar Machines",
-        "Fleet Types",
-        "Brands",
-        "Fleet Age",
-        "Fleet Condition",
-        "Customer Sectors",
-        "Usage Type",
-        "Work Areas",
-        "Current Brands",
-        "Purchase Frequency",
-        "Supplier Reasons",
-        "Supplier Issues",
-        "Current Needs",
-        "Missing Machines",
-        "Interest",
-        "Timing",
-        "Proposed Products",
-        "Strengths",
-        "Competitors",
-        "Interest Level",
-        "Potential",
-        "Probability (%)",
-        "Follow Up",
-        "Next Action",
-        "Next Contact Date",
-        "Notes"
+        "Tipologia azienda",
+        "Anno di fondazione",
+        "Numero dipendenti",
+        "Fatturato annuo indicativo",
+        "Area operativa",
+        "Sede principale",
+        "Settore principale",
+        "Altre sedi / stabilimenti",
+        "Principali mercati serviti",
+        "Settori serviti",
+        "Clienti principali / referenze",
+        "Marchi o aziende a cui fornisce",
+        "Lavora con aziende simili alla nostra",
+        "Lavora con competitor",
+        "Presenza internazionale",
+        "Punti di forza sul mercato",
+        "Prodotti o servizi principali",
+        "Categorie trattate",
+        "Marchi rappresentati",
+        "Prodotti di maggiore interesse per noi",
+        "Servizi aggiuntivi offerti",
+        "Esperienza nel nostro settore",
+        "Capacità produttiva",
+        "Disponibilità a magazzino",
+        "Tempi medi di consegna",
+        "Quantità minima d’ordine",
+        "Possibilità di gestire urgenze",
+        "Possibilità di crescita futura",
+        "Stabilità della fornitura",
+        "Certificazioni disponibili",
+        "Standard qualitativi",
+        "Procedure di controllo qualità",
+        "Garanzie offerte",
+        "Documentazione tecnica disponibile",
+        "Storico problematiche / reclami",
+        "Eventuali criticità note",
+        "Zone di consegna",
+        "Tempi medi di consegna logistica",
+        "Modalità di spedizione",
+        "Gestione imballaggio",
+        "Costi di trasporto",
+        "Tracciabilità spedizioni",
+        "Assistenza post-vendita",
+        "Gestione resi / sostituzioni",
+        "Livello prezzi",
+        "Condizioni di pagamento",
+        "Scontistiche",
+        "Flessibilità commerciale",
+        "Listini disponibili",
+        "Valuta utilizzata",
+        "Validità offerte",
+        "Condizioni contrattuali",
+        "Possibili aree di collaborazione",
+        "Prodotti / servizi di interesse",
+        "Valore strategico del fornitore",
+        "Priorità della collaborazione",
+        "Possibili vantaggi per la nostra azienda",
+        "Rischi potenziali",
+        "Prossimi passi",
+        "Affidabilità",
+        "Qualità prodotto / servizio",
+        "Competitività prezzo",
+        "Livello di servizio",
+        "Capacità produttiva valutazione",
+        "Flessibilità valutazione",
+        "Potenziale collaborazione",
+        "Valutazione complessiva",
+        "Note generali",
+        "Commenti interni",
+        "Informazioni importanti",
+        "Aspetti da verificare",
+        "Documenti da richiedere",
+        "Prossimo contatto previsto"
       ];
 
       const values = [
         getValue("visitDate"),
         getValue("company"),
         getValue("office"),
+        getValue("address"),
+        getValue("country"),
+        getValue("website"),
         getValue("contactPerson"),
+        getValue("role"),
         getValue("phone"),
         getValue("email"),
-        getValue("website"),
-        getCheckedValues("businessType"),
+        getCheckedValues("companyType"),
+        getValue("foundedYear"),
         getValue("employees"),
-        getValue("operatingArea"),
         getValue("revenue"),
-        getValue("totalMachines"),
-        getValue("similarMachines"),
-        getCheckedValues("fleetTypes"),
-        getValue("brands"),
-        getValue("fleetAge"),
-        getValue("fleetCondition"),
-        getCheckedValues("customerSectors"),
-        getCheckedValues("usageType"),
-        getValue("workAreas"),
-        getValue("currentBrands"),
-        getValue("purchaseFrequency"),
-        getCheckedValues("supplierReasons"),
-        getValue("supplierProblems"),
-        getValue("currentNeeds"),
-        getValue("missingMachines"),
-        getCheckedValues("interestType"),
-        getCheckedValues("timing"),
-        getValue("proposedProducts"),
-        getCheckedValues("strengths"),
+        getValue("operatingArea"),
+        getValue("mainOffice"),
+        getValue("mainSector"),
+        getValue("otherSites"),
+        getValue("mainMarkets"),
+        getValue("sectorsServed"),
+        getValue("mainClients"),
+        getValue("suppliedBrands"),
+        getValue("similarCompanies"),
         getValue("competitors"),
-        getValue("interestLevel"),
-        getValue("potential"),
-        getValue("probability"),
-        getCheckedValues("followUp"),
-        getValue("nextAction"),
-        getValue("nextContactDate"),
-        getValue("freeNotes")
+        getValue("internationalPresence"),
+        getValue("marketStrengths"),
+        getValue("mainProducts"),
+        getValue("productCategories"),
+        getValue("representedBrands"),
+        getValue("interestingProducts"),
+        getCheckedValues("additionalServices"),
+        getValue("sectorExperience"),
+        getValue("productionCapacity"),
+        getValue("stockAvailability"),
+        getValue("leadTime"),
+        getValue("moq"),
+        getValue("urgency"),
+        getValue("futureGrowth"),
+        getValue("supplyStability"),
+        getCheckedValues("certifications"),
+        getValue("qualityStandards"),
+        getValue("qualityControl"),
+        getValue("warranties"),
+        getValue("technicalDocs"),
+        getValue("complaintsHistory"),
+        getValue("knownIssues"),
+        getValue("deliveryAreas"),
+        getValue("deliveryTimes"),
+        getValue("shippingMethods"),
+        getValue("packaging"),
+        getValue("transportCosts"),
+        getValue("tracking"),
+        getValue("afterSalesSupport"),
+        getValue("returnsManagement"),
+        getValue("priceLevel"),
+        getValue("paymentTerms"),
+        getValue("discounts"),
+        getValue("commercialFlexibility"),
+        getValue("priceLists"),
+        getValue("currency"),
+        getValue("offerValidity"),
+        getValue("contractConditions"),
+        getValue("cooperationAreas"),
+        getValue("productsInterest"),
+        getValue("strategicValue"),
+        getValue("priority"),
+        getValue("advantages"),
+        getValue("risks"),
+        getValue("nextSteps"),
+        getValue("reliability"),
+        getValue("qualityLevel"),
+        getValue("priceCompetitiveness"),
+        getValue("serviceLevel"),
+        getValue("productionCapability"),
+        getValue("supplierFlexibility"),
+        getValue("collaborationPotential"),
+        getValue("overallEvaluation"),
+        getValue("freeNotes"),
+        getValue("internalComments"),
+        getValue("importantInfo"),
+        getValue("toVerify"),
+        getValue("documentsRequest"),
+        getValue("nextContactDate")
       ];
 
       const data = [headers, values];
@@ -731,10 +1152,10 @@
       });
 
       const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Fornitore");
 
-      const company = cleanFileName(getValue("company") || "Client");
-      const visitDate = cleanFileName(getValue("visitDate") || "Visit");
+      const company = cleanFileName(getValue("company") || "Fornitore");
+      const visitDate = cleanFileName(getValue("visitDate") || "Visita");
 
       XLSX.writeFile(workbook, company + "_" + visitDate + ".xlsx");
     }
