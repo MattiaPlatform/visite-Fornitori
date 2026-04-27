@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Visit Report - Platform Basket</title>
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #f3f5f7;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d7dde5;
+      --green: #16a34a;
+      --green-dark: #0f7a36;
+      --blue: #1d4ed8;
+      --blue-dark: #173ea8;
+      --light: #e5e7eb;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --radius: 16px;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+    }
+
+    .topbar {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 22px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .topbar img {
+      height: 64px;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .topbar-text h1 {
+      margin: 0 0 4px 0;
+      font-size: 34px;
+      line-height: 1.1;
+      color: #111827;
+    }
+
+    .topbar-text p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin: 0 0 18px 0;
+      font-size: 20px;
+      color: #0f3d2e;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+      font-size: 15px;
+      color: #111827;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #7aa7ff;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+    }
+
+    textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 24px;
+      padding-top: 4px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 400;
+      margin: 0;
+      color: #111827;
+    }
+
+    .checkbox-item input {
+      width: auto;
+      margin: 0;
+    }
+
+    .actions {
+      position: sticky;
+      bottom: 0;
+      background: #f3f5f7;
+      padding-top: 12px;
+      padding-bottom: 8px;
+      margin-top: 8px;
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 10px;
+      display: block;
+      transition: background 0.2s ease, transform 0.05s ease;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-whatsapp {
+      background: #16a34a;
+      color: #ffffff;
+    }
+
+    .btn-whatsapp:hover {
+      background: #0f7a36;
+    }
+
+    .btn-excel {
+      background: #1d4ed8;
+      color: #ffffff;
+    }
+
+    .btn-excel:hover {
+      background: #173ea8;
+    }
+
+    .btn-clear {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .grid,
+      .checkbox-group {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 14px 12px 34px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .topbar-text h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <img src="logo.png" alt="Platform Basket">
+      <div class="topbar-text">
+        <h1>Client Visit Report</h1>
+        <p>Platform Basket</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>1. Client Details</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="visitDate">Visit Date</label>
+          <input type="date" id="visitDate">
+        </div>
+        <div class="field">
+          <label for="company">Company</label>
+          <input type="text" id="company">
+        </div>
+        <div class="field">
+          <label for="office">Head Office / Location</label>
+          <input type="text" id="office">
+        </div>
+        <div class="field">
+          <label for="contactPerson">Contact Person (Name + Role)</label>
+          <input type="text" id="contactPerson">
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone">
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email">
+        </div>
+        <div class="field full">
+          <label for="website">Website</label>
+          <input type="text" id="website">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2. Company Profile</h2>
+      <div class="field">
+        <label>Business Type</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" class="businessType" value="Rental"> Rental</label>
+          <label class="checkbox-item"><input type="checkbox" class="businessType" value="Dealer / Reseller"> Dealer / Reseller</label>
+          <label class="checkbox-item"><input type="checkbox" class="businessType" value="End User"> End User</label>
+          <label class="checkbox-item"><input type="checkbox" class="businessType" value="Other"> Other</label>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="employees">Number of Employees</label>
+          <input type="number" id="employees">
+        </div>
+        <div class="field">
+          <label for="operatingArea">Operating Area</label>
+          <select id="operatingArea">
+            <option value="">Select</option>
+            <option>Local</option>
+            <option>National</option>
+            <option>International</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="revenue">Estimated Annual Revenue</label>
+          <select id="revenue">
+            <option value="">Select</option>
+            <option>&lt; 1M</option>
+            <option>1-5M</option>
+            <option>5-10M</option>
+            <option>&gt; 10M</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>3. Fleet Information</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="totalMachines">Total Number of Machines</label>
+          <input type="number" id="totalMachines">
+        </div>
+        <div class="field">
+          <label for="similarMachines">Machines Similar to Ours</label>
+          <input type="number" id="similarMachines">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Machine Types in Fleet</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" class="fleetTypes" value="Spider Lifts"> Spider Lifts</label>
+          <label class="checkbox-item"><input type="checkbox" class="fleetTypes" value="Truck Mounted"> Truck Mounted</label>
+          <label class="checkbox-item"><input type="checkbox" class="fleetTypes" value="Vertical Lifts"> Vertical Lifts</label>
+          <label class="checkbox-item"><input type="checkbox" class="fleetTypes" value="Articulated"> Articulated</label>
+          <label class="checkbox-item"><input type="checkbox" class="fleetTypes" value="Telescopic"> Telescopic</label>
+          <label class="checkbox-item"><input type="checkbox" class="fleetTypes" value="Other"> Other</label>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="field full">
+          <label for="brands">Main Brands</label>
+          <input type="text" id="brands">
+        </div>
+        <div class="field">
+          <label for="fleetAge">Average Fleet Age</label>
+          <input type="text" id="fleetAge" placeholder="Example: 5 years">
+        </div>
+        <div class="field">
+          <label for="fleetCondition">General Fleet Condition</label>
+          <select id="fleetCondition">
+            <option value="">Select</option>
+            <option>New</option>
+            <option>Average</option>
+            <option>Old</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4. Market and Usage</h2>
+      <div class="field">
+        <label>Main Customer Sectors</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" class="customerSectors" value="Construction"> Construction</label>
+          <label class="checkbox-item"><input type="checkbox" class="customerSectors" value="Industry"> Industry</label>
+          <label class="checkbox-item"><input type="checkbox" class="customerSectors" value="Tree Care / Green"> Tree Care / Green</label>
+          <label class="checkbox-item"><input type="checkbox" class="customerSectors" value="Facility / Maintenance"> Facility / Maintenance</label>
+          <label class="checkbox-item"><input type="checkbox" class="customerSectors" value="Other"> Other</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Usage Type</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" class="usageType" value="Short-Term Rental"> Short-Term Rental</label>
+          <label class="checkbox-item"><input type="checkbox" class="usageType" value="Long-Term Rental"> Long-Term Rental</label>
+          <label class="checkbox-item"><input type="checkbox" class="usageType" value="Internal Use"> Internal Use</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="workAreas">Main Operating Areas / Territories</label>
+        <input type="text" id="workAreas">
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>5. Current Suppliers</h2>
+      <div class="field">
+        <label for="currentBrands">Purchased / Rented Brands</label>
+        <input type="text" id="currentBrands">
+      </div>
+
+      <div class="field">
+        <label for="purchaseFrequency">Purchase Frequency</label>
+        <input type="text" id="purchaseFrequency">
+      </div>
+
+      <div class="field">
+        <label>Why They Choose Current Suppliers</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" class="supplierReasons" value="Price"> Price</label>
+          <label class="checkbox-item"><input type="checkbox" class="supplierReasons" value="Quality"> Quality</label>
+          <label class="checkbox-item"><input type="checkbox" class="supplierReasons" value="Service"> Service</label>
+          <label class="checkbox-item"><input type="checkbox" class="supplierReasons" value="Availability"> Availability</label>
+          <label class="checkbox-item"><input type="checkbox" class="supplierReasons" value="Other"> Other</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="supplierProblems">Issues / Weaknesses with Current Suppliers</label>
+        <textarea id="supplierProblems"></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>6. Needs and Opportunities</h2>
+      <div class="field">
+        <label for="currentNeeds">Current Needs</label>
+        <textarea id="currentNeeds"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="missingMachines">Machine Types Missing in Their Fleet</label>
+        <textarea id="missingMachines"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Interest In</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" class="interestType" value="New Purchase"> New Purchase</label>
+          <label class="checkbox-item"><input type="checkbox" class="interestType" value="Fleet Replacement"> Fleet Replacement</label>
+          <label class="checkbox-item"><input type="checkbox" class="interestType" value="Fleet Expansion"> Fleet Expansion</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Timing</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" class="timing" value="Immediate"> Immediate</label>
+          <label class="checkbox-item"><input type="checkbox" class="timing" value="3-6 Months"> 3-6 Months</label>
+          <label class="checkbox-item"><input type="checkbox" class="timing" value="6-12 Months"> 6-12 Months</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>7. Commercial Positioning</h2>
+      <div class="field">
+        <label for="proposedProducts">Platform Basket Products to Propose</label>
+        <textarea id="proposedProducts"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Key Strengths to Push</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" class="strengths" value="Compactness"> Compactness</label>
+          <label class="checkbox-item"><input type="checkbox" class="strengths" value="Performance"> Performance</label>
+          <label class="checkbox-item"><input type="checkbox" class="strengths" value="Quality"> Quality</label>
+          <label class="checkbox-item"><input type="checkbox" class="strengths" value="Service"> Service</label>
+          <label class="checkbox-item"><input type="checkbox" class="strengths" value="Other"> Other</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="competitors">Competitors Present</label>
+        <input type="text" id="competitors">
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>8. Client Evaluation</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="interestLevel">Interest Level (1-5)</label>
+          <select id="interestLevel">
+            <option value="">Select</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="potential">Potential</label>
+          <select id="potential">
+            <option value="">Select</option>
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="probability">Sales Probability (%)</label>
+          <input type="number" id="probability">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>9. Follow-Up</h2>
+      <div class="field">
+        <label>Next Actions</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" class="followUp" value="Send Catalogue"> Send Catalogue</label>
+          <label class="checkbox-item"><input type="checkbox" class="followUp" value="Send Offer"> Send Offer</label>
+          <label class="checkbox-item"><input type="checkbox" class="followUp" value="Machine Demo"> Machine Demo</label>
+          <label class="checkbox-item"><input type="checkbox" class="followUp" value="New Visit"> New Visit</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="nextAction">Next Planned Action</label>
+        <textarea id="nextAction"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="nextContactDate">Next Contact Date</label>
+        <input type="date" id="nextContactDate">
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>10. Free Notes</h2>
+      <div class="field">
+        <textarea id="freeNotes" style="min-height: 140px;"></textarea>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-whatsapp" onclick="sendWhatsApp()">Send via WhatsApp</button>
+      <button class="btn btn-excel" onclick="downloadExcel()">Download Excel</button>
+      <button class="btn btn-clear" onclick="clearForm()">Clear Form</button>
+      <div class="note">WhatsApp opens the report already written. Excel downloads a real .xlsx file.</div>
+    </div>
+  </div>
+
+  <script>
+    function getCheckedValues(className) {
+      const items = document.querySelectorAll("." + className + ":checked");
+      return Array.from(items).map(function(item) {
+        return item.value;
+      }).join(", ");
+    }
+
+    function getValue(id) {
+      const el = document.getElementById(id);
+      return el ? el.value.trim() : "";
+    }
+
+    function line(label, value) {
+      return value ? label + ": " + value + "\n" : "";
+    }
+
+    function cleanFileName(value) {
+      return String(value || "")
+        .replace(/[\\/:*?"<>|]/g, "")
+        .replace(/\s+/g, "_");
+    }
+
+    function sendWhatsApp() {
+      const message =
+        "CLIENT VISIT REPORT\n\n" +
+        "1. CLIENT DETAILS\n" +
+        line("Visit Date", getValue("visitDate")) +
+        line("Company", getValue("company")) +
+        line("Head Office / Location", getValue("office")) +
+        line("Contact Person", getValue("contactPerson")) +
+        line("Phone", getValue("phone")) +
+        line("Email", getValue("email")) +
+        line("Website", getValue("website")) + "\n" +
+
+        "2. COMPANY PROFILE\n" +
+        line("Business Type", getCheckedValues("businessType")) +
+        line("Employees", getValue("employees")) +
+        line("Operating Area", getValue("operatingArea")) +
+        line("Estimated Revenue", getValue("revenue")) + "\n" +
+
+        "3. FLEET INFORMATION\n" +
+        line("Total Machines", getValue("totalMachines")) +
+        line("Machines Similar to Ours", getValue("similarMachines")) +
+        line("Fleet Types", getCheckedValues("fleetTypes")) +
+        line("Main Brands", getValue("brands")) +
+        line("Average Fleet Age", getValue("fleetAge")) +
+        line("Fleet Condition", getValue("fleetCondition")) + "\n" +
+
+        "4. MARKET AND USAGE\n" +
+        line("Customer Sectors", getCheckedValues("customerSectors")) +
+        line("Usage Type", getCheckedValues("usageType")) +
+        line("Main Operating Areas", getValue("workAreas")) + "\n" +
+
+        "5. CURRENT SUPPLIERS\n" +
+        line("Current Brands", getValue("currentBrands")) +
+        line("Purchase Frequency", getValue("purchaseFrequency")) +
+        line("Why They Choose Current Suppliers", getCheckedValues("supplierReasons")) +
+        line("Supplier Issues", getValue("supplierProblems")) + "\n" +
+
+        "6. NEEDS AND OPPORTUNITIES\n" +
+        line("Current Needs", getValue("currentNeeds")) +
+        line("Missing Machines", getValue("missingMachines")) +
+        line("Interest In", getCheckedValues("interestType")) +
+        line("Timing", getCheckedValues("timing")) + "\n" +
+
+        "7. COMMERCIAL POSITIONING\n" +
+        line("Proposed Products", getValue("proposedProducts")) +
+        line("Key Strengths", getCheckedValues("strengths")) +
+        line("Competitors", getValue("competitors")) + "\n" +
+
+        "8. CLIENT EVALUATION\n" +
+        line("Interest Level", getValue("interestLevel")) +
+        line("Potential", getValue("potential")) +
+        line("Sales Probability", getValue("probability") ? getValue("probability") + "%" : "") + "\n" +
+
+        "9. FOLLOW-UP\n" +
+        line("Next Actions", getCheckedValues("followUp")) +
+        line("Next Planned Action", getValue("nextAction")) +
+        line("Next Contact Date", getValue("nextContactDate")) + "\n" +
+
+        "10. FREE NOTES\n" +
+        (getValue("freeNotes") || "") + "\n";
+
+      window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank");
+    }
+
+    function downloadExcel() {
+      if (typeof XLSX === "undefined") {
+        alert("XLSX library not loaded.");
+        return;
+      }
+
+      const headers = [
+        "Visit Date",
+        "Company",
+        "Head Office",
+        "Contact Person",
+        "Phone",
+        "Email",
+        "Website",
+        "Business Type",
+        "Employees",
+        "Operating Area",
+        "Revenue",
+        "Total Machines",
+        "Similar Machines",
+        "Fleet Types",
+        "Brands",
+        "Fleet Age",
+        "Fleet Condition",
+        "Customer Sectors",
+        "Usage Type",
+        "Work Areas",
+        "Current Brands",
+        "Purchase Frequency",
+        "Supplier Reasons",
+        "Supplier Issues",
+        "Current Needs",
+        "Missing Machines",
+        "Interest",
+        "Timing",
+        "Proposed Products",
+        "Strengths",
+        "Competitors",
+        "Interest Level",
+        "Potential",
+        "Probability (%)",
+        "Follow Up",
+        "Next Action",
+        "Next Contact Date",
+        "Notes"
+      ];
+
+      const values = [
+        getValue("visitDate"),
+        getValue("company"),
+        getValue("office"),
+        getValue("contactPerson"),
+        getValue("phone"),
+        getValue("email"),
+        getValue("website"),
+        getCheckedValues("businessType"),
+        getValue("employees"),
+        getValue("operatingArea"),
+        getValue("revenue"),
+        getValue("totalMachines"),
+        getValue("similarMachines"),
+        getCheckedValues("fleetTypes"),
+        getValue("brands"),
+        getValue("fleetAge"),
+        getValue("fleetCondition"),
+        getCheckedValues("customerSectors"),
+        getCheckedValues("usageType"),
+        getValue("workAreas"),
+        getValue("currentBrands"),
+        getValue("purchaseFrequency"),
+        getCheckedValues("supplierReasons"),
+        getValue("supplierProblems"),
+        getValue("currentNeeds"),
+        getValue("missingMachines"),
+        getCheckedValues("interestType"),
+        getCheckedValues("timing"),
+        getValue("proposedProducts"),
+        getCheckedValues("strengths"),
+        getValue("competitors"),
+        getValue("interestLevel"),
+        getValue("potential"),
+        getValue("probability"),
+        getCheckedValues("followUp"),
+        getValue("nextAction"),
+        getValue("nextContactDate"),
+        getValue("freeNotes")
+      ];
+
+      const data = [headers, values];
+      const worksheet = XLSX.utils.aoa_to_sheet(data);
+
+      worksheet["!cols"] = headers.map(function(header, index) {
+        const value = values[index] ? String(values[index]) : "";
+        const maxLen = Math.max(header.length, value.length, 18);
+        return { wch: Math.min(maxLen + 2, 50) };
+      });
+
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
+
+      const company = cleanFileName(getValue("company") || "Client");
+      const visitDate = cleanFileName(getValue("visitDate") || "Visit");
+
+      XLSX.writeFile(workbook, company + "_" + visitDate + ".xlsx");
+    }
+
+    function clearForm() {
+      document.querySelectorAll("input, textarea, select").forEach(function(el) {
+        if (el.type === "checkbox") {
+          el.checked = false;
+        } else {
+          el.value = "";
+        }
+      });
+    }
+  </script>
+</body>
+</html>
